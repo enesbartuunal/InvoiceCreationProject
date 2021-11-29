@@ -1,0 +1,257 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="MSCTModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Malzeme">
+          <Key>
+            <PropertyRef Name="MalzemeKodu" />
+          </Key>
+          <Property Name="MalzemeKodu" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MalzemeAdi" Type="nchar" MaxLength="150" Nullable="false" />
+          <Property Name="MalzemeTuru" Type="nchar" MaxLength="20" Nullable="false" />
+          <Property Name="VergiOrani" Type="float" Nullable="false" />
+          <Property Name="StoklamaOlcuBirimi" Type="nchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Musteri">
+          <Key>
+            <PropertyRef Name="MusteriKodu" />
+          </Key>
+          <Property Name="MusteriKodu" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MusterriAdı" Type="nchar" MaxLength="50" Nullable="false" />
+          <Property Name="MusteriTuru" Type="nchar" MaxLength="5" Nullable="false" />
+          <Property Name="OzelFıyatListesi" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SiparisBaslik">
+          <Key>
+            <PropertyRef Name="SiparisNo" />
+          </Key>
+          <Property Name="SiparisNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SiparisTuru" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="TeslimTarihi" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="Müşteri" Type="nchar" MaxLength="150" Nullable="false" />
+          <Property Name="ToplamTutar" Type="float" Nullable="false" />
+          <Property Name="ParaBirimi" Type="nchar" MaxLength="20" Nullable="false" />
+          <Property Name="KalemNo" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SiparisKalem">
+          <Key>
+            <PropertyRef Name="KalemNo" />
+          </Key>
+          <Property Name="KalemNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MalzemeKodu" Type="int" Nullable="false" />
+          <Property Name="Miktar" Type="float" Nullable="false" />
+          <Property Name="StoklamaÖlçüBirimi" Type="nchar" MaxLength="20" Nullable="false" />
+          <Property Name="BirimFiyat" Type="float" Nullable="false" />
+          <Property Name="VergiTutarı" Type="float" Nullable="false" />
+          <Property Name="NetTutar" Type="float" Nullable="false" />
+          <Property Name="MalzemeAdı" Type="nchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <Association Name="FK_SiparisBaslik_SiparisKalem">
+          <End Role="SiparisKalem" Type="Self.SiparisKalem" Multiplicity="1" />
+          <End Role="SiparisBaslik" Type="Self.SiparisBaslik" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SiparisKalem">
+              <PropertyRef Name="KalemNo" />
+            </Principal>
+            <Dependent Role="SiparisBaslik">
+              <PropertyRef Name="KalemNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MSCTModelStoreContainer">
+          <EntitySet Name="Malzeme" EntityType="Self.Malzeme" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Musteri" EntityType="Self.Musteri" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SiparisBaslik" EntityType="Self.SiparisBaslik" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SiparisKalem" EntityType="Self.SiparisKalem" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_SiparisBaslik_SiparisKalem" Association="Self.FK_SiparisBaslik_SiparisKalem">
+            <End Role="SiparisKalem" EntitySet="SiparisKalem" />
+            <End Role="SiparisBaslik" EntitySet="SiparisBaslik" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MSCTModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Malzeme">
+          <Key>
+            <PropertyRef Name="MalzemeKodu" />
+          </Key>
+          <Property Name="MalzemeKodu" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MalzemeAdi" Type="String" MaxLength="150" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="MalzemeTuru" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="VergiOrani" Type="Double" Nullable="false" />
+          <Property Name="StoklamaOlcuBirimi" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Musteri">
+          <Key>
+            <PropertyRef Name="MusteriKodu" />
+          </Key>
+          <Property Name="MusteriKodu" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MusterriAdı" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="MusteriTuru" Type="String" MaxLength="5" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="OzelFıyatListesi" Type="Double" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SiparisBaslik">
+          <Key>
+            <PropertyRef Name="SiparisNo" />
+          </Key>
+          <Property Name="SiparisNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SiparisTuru" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="TeslimTarihi" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Müşteri" Type="String" MaxLength="150" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="ToplamTutar" Type="Double" Nullable="false" />
+          <Property Name="ParaBirimi" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="KalemNo" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="SiparisKalem" Relationship="Self.FK_SiparisBaslik_SiparisKalem" FromRole="SiparisBaslik" ToRole="SiparisKalem" />
+        </EntityType>
+        <EntityType Name="SiparisKalem">
+          <Key>
+            <PropertyRef Name="KalemNo" />
+          </Key>
+          <Property Name="KalemNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MalzemeKodu" Type="Int32" Nullable="false" />
+          <Property Name="Miktar" Type="Double" Nullable="false" />
+          <Property Name="StoklamaÖlçüBirimi" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="BirimFiyat" Type="Double" Nullable="false" />
+          <Property Name="VergiTutarı" Type="Double" Nullable="false" />
+          <Property Name="NetTutar" Type="Double" Nullable="false" />
+          <Property Name="MalzemeAdı" Type="String" MaxLength="150" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="SiparisBasliks" Relationship="Self.FK_SiparisBaslik_SiparisKalem" FromRole="SiparisKalem" ToRole="SiparisBaslik" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="FK_SiparisBaslik_SiparisKalem">
+          <End Role="SiparisKalem" Type="Self.SiparisKalem" Multiplicity="1" />
+          <End Role="SiparisBaslik" Type="Self.SiparisBaslik" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SiparisKalem">
+              <PropertyRef Name="KalemNo" />
+            </Principal>
+            <Dependent Role="SiparisBaslik">
+              <PropertyRef Name="KalemNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MSCTEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Malzemes" EntityType="Self.Malzeme" />
+          <EntitySet Name="Musteris" EntityType="Self.Musteri" />
+          <EntitySet Name="SiparisBasliks" EntityType="Self.SiparisBaslik" />
+          <EntitySet Name="SiparisKalems" EntityType="Self.SiparisKalem" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <AssociationSet Name="FK_SiparisBaslik_SiparisKalem" Association="Self.FK_SiparisBaslik_SiparisKalem">
+            <End Role="SiparisKalem" EntitySet="SiparisKalems" />
+            <End Role="SiparisBaslik" EntitySet="SiparisBasliks" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MSCTModelStoreContainer" CdmEntityContainer="MSCTEntities">
+          <EntitySetMapping Name="Malzemes">
+            <EntityTypeMapping TypeName="MSCTModel.Malzeme">
+              <MappingFragment StoreEntitySet="Malzeme">
+                <ScalarProperty Name="MalzemeKodu" ColumnName="MalzemeKodu" />
+                <ScalarProperty Name="MalzemeAdi" ColumnName="MalzemeAdi" />
+                <ScalarProperty Name="MalzemeTuru" ColumnName="MalzemeTuru" />
+                <ScalarProperty Name="VergiOrani" ColumnName="VergiOrani" />
+                <ScalarProperty Name="StoklamaOlcuBirimi" ColumnName="StoklamaOlcuBirimi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Musteris">
+            <EntityTypeMapping TypeName="MSCTModel.Musteri">
+              <MappingFragment StoreEntitySet="Musteri">
+                <ScalarProperty Name="MusteriKodu" ColumnName="MusteriKodu" />
+                <ScalarProperty Name="MusterriAdı" ColumnName="MusterriAdı" />
+                <ScalarProperty Name="MusteriTuru" ColumnName="MusteriTuru" />
+                <ScalarProperty Name="OzelFıyatListesi" ColumnName="OzelFıyatListesi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SiparisBasliks">
+            <EntityTypeMapping TypeName="MSCTModel.SiparisBaslik">
+              <MappingFragment StoreEntitySet="SiparisBaslik">
+                <ScalarProperty Name="SiparisNo" ColumnName="SiparisNo" />
+                <ScalarProperty Name="SiparisTuru" ColumnName="SiparisTuru" />
+                <ScalarProperty Name="TeslimTarihi" ColumnName="TeslimTarihi" />
+                <ScalarProperty Name="Müşteri" ColumnName="Müşteri" />
+                <ScalarProperty Name="ToplamTutar" ColumnName="ToplamTutar" />
+                <ScalarProperty Name="ParaBirimi" ColumnName="ParaBirimi" />
+                <ScalarProperty Name="KalemNo" ColumnName="KalemNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SiparisKalems">
+            <EntityTypeMapping TypeName="MSCTModel.SiparisKalem">
+              <MappingFragment StoreEntitySet="SiparisKalem">
+                <ScalarProperty Name="KalemNo" ColumnName="KalemNo" />
+                <ScalarProperty Name="MalzemeKodu" ColumnName="MalzemeKodu" />
+                <ScalarProperty Name="Miktar" ColumnName="Miktar" />
+                <ScalarProperty Name="StoklamaÖlçüBirimi" ColumnName="StoklamaÖlçüBirimi" />
+                <ScalarProperty Name="BirimFiyat" ColumnName="BirimFiyat" />
+                <ScalarProperty Name="VergiTutarı" ColumnName="VergiTutarı" />
+                <ScalarProperty Name="NetTutar" ColumnName="NetTutar" />
+                <ScalarProperty Name="MalzemeAdı" ColumnName="MalzemeAdı" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="MSCTModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
